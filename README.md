@@ -9,8 +9,35 @@ A Laravel package that provides a multi-platform app framework for Shopify and B
 
 ## Installation
 
+Since this package is hosted on a private GitHub repository, add it as a VCS source in your project's `composer.json` before requiring it:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:your-org/extension-framework.git"
+        }
+    ]
+}
+```
+
+Then install the package:
+
 ```bash
 composer require lantera/extension-framework
+```
+
+**Authentication** — each developer needs a GitHub personal access token with `repo` scope configured in Composer:
+
+```bash
+composer config --global github-oauth.github.com YOUR_GITHUB_TOKEN
+```
+
+For CI/CD pipelines, pass the token via the environment variable:
+
+```bash
+COMPOSER_AUTH='{"github-oauth":{"github.com":"YOUR_GITHUB_TOKEN"}}'
 ```
 
 The package auto-discovers its service provider. To publish the config:
