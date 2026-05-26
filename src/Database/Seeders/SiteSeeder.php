@@ -11,21 +11,24 @@ class SiteSeeder extends Seeder
     {
         $sites = [
             [
-                'platform'   => 'shopify',
-                'name'       => 'Demo Shopify Store',
-                'url'        => 'https://demo-shopify.myshopify.com',
-                'store_hash' => 'demo-shopify.myshopify.com',
+                'platform'                    => 'shopify',
+                'name'                        => 'Demo Shopify Store',
+                'url'                         => 'https://demo-shopify.myshopify.com',
+                'store_hash'                  => 'demo-shopify.myshopify.com',
+                'apps_manager_access_token'   => 'https://demo-shopify.myshopify.com',
             ],
             [
-                'platform'   => 'bigcommerce',
-                'name'       => 'Demo BigCommerce Store',
-                'url'        => 'https://store-demo.mybigcommerce.com',
-                'store_hash' => 'demo',
+                'platform'                    => 'bigcommerce',
+                'name'                        => 'Demo BigCommerce Store',
+                'url'                         => 'https://trial.bigcommerce.com',
+                'store_hash'                  => 'demo',
+                'apps_manager_access_token'   => 'https://trial.bigcommerce.com',
             ],
             [
-                'platform' => 'custom',
-                'name'     => 'Demo Custom Store',
-                'url'      => 'https://demo.example.com',
+                'platform'                    => 'custom',
+                'name'                        => 'Demo Custom Store',
+                'url'                         => 'https://demo.example.com',
+                'apps_manager_access_token'   => 'https://demo.example.com',
             ],
         ];
 

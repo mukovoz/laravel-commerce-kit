@@ -39,4 +39,16 @@ return [
         'webhook_secret' => env('CUSTOM_WEBHOOK_SECRET', ''),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Apps Manager
+    |--------------------------------------------------------------------------
+    */
+    'apps_manager' => [
+        'base_url' => env('APPS_MANAGER_BASE_URL', 'https://api.appsmanager.com/'),
+        'script_url' => rtrim(env('APPS_MANAGER_SCRIPT_URL', 'https://api.appsmanager.com/script'), '/') . '/' . env('APPS_MANAGER_APPLICATION_ID', '') . "/",
+        'application_id' => env('APPS_MANAGER_APPLICATION_ID', ''),
+        'application_secret' => env('APPS_MANAGER_APPLICATION_SECRET_KEY', ''),
+    ],
+
 ];

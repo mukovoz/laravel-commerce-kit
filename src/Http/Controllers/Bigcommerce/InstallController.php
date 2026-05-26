@@ -9,11 +9,17 @@ use Illuminate\Support\Facades\Http;
 use Lantera\ExtensionFramework\Enums\Platform;
 use Lantera\ExtensionFramework\Events\Bigcommerce\AppInstalled;
 use Lantera\ExtensionFramework\Http\Resources\SiteResource;
-use Lantera\ExtensionFramework\Models\Site;
+use Lantera\ExtensionFramework\Models\Bigcommerce\Site;
 
 class InstallController extends BigcommerceController
 {
-    public function __invoke(Request $request): JsonResponse
+
+    private function storeHashFromContext(string $context): string
+    {
+        return explode('/', ltrim($context, '/'))[1] ?? $context;
+    }
+
+    public function __invoke(Request $request): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'code' => ['required', 'string'],
@@ -36,6 +42,7 @@ class InstallController extends BigcommerceController
             abort(502, 'Failed to retrieve access token from BigCommerce: ' . $e->getMessage());
         }
 
+
         $data = $response->json();
         $storeHash = $this->storeHashFromContext($request->query('context'));
 
@@ -53,9 +60,11 @@ class InstallController extends BigcommerceController
         );
 
         AppInstalled::dispatch($site);
+        session()->put('current_site_id', $site->id);
 
-        return (new SiteResource($site))
-            ->response()
-            ->setStatusCode($site->wasRecentlyCreated ? 201 : 200);
+
+        return redirect(route('bigcommerce.load'))->with('new_installation', true);
+
+
     }
 }
