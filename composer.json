@@ -4,7 +4,6 @@
     "description": "Lantera Apps — multi-platform extension framework for Shopify, BigCommerce and custom storefronts.",
     "keywords": ["laravel", "shopify", "bigcommerce", "extensions"],
     "license": "MIT",
-    "version": "1.0.0",
     "type": "library",
     "require": {
         "php": "^8.3",
