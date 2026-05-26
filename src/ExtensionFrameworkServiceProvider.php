@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Lantera\ExtensionFramework\Console\Commands\InstallCommand;
+use Lantera\ExtensionFramework\Console\Commands\SitesCommand;
 use Lantera\ExtensionFramework\Http\Middleware\VerifyAppsManagerSecret;
 use Lantera\ExtensionFramework\Http\Middleware\VerifyBigcommercePayload;
 use Lantera\ExtensionFramework\Http\Middleware\VerifyShopifyPayload;
@@ -51,6 +53,11 @@ class ExtensionFrameworkServiceProvider extends ServiceProvider
         });
 
         if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallCommand::class,
+                SitesCommand::class,
+            ]);
+
             $this->publishes([
                 __DIR__.'/../config/platforms.php' => config_path('platforms.php'),
             ], 'lantera-config');

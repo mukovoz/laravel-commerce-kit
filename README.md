@@ -158,6 +158,50 @@ All routes are registered automatically by the service provider under the `web` 
 | `POST` | `/bigcommerce/webhook/apps-manager` | Receives subscription webhooks from Lantera AppsManager |
 | `GET` | `/bigcommerce/emulate/{site}` | Dev-only: emulates a merchant session without OAuth (disabled in production) |
 
+## Artisan Commands
+
+The package registers two commands for local development and testing. Both are disabled in production and will exit with an error if `APP_ENV=production`.
+
+### `extension:install`
+
+Emulates a full app installation without going through the real OAuth flow. Registers the store with Lantera AppsManager and returns a browser URL you can open to test the app immediately.
+
+```bash
+php artisan extension:install
+```
+
+Interactive prompts:
+
+1. **Which platform?** — choose `Shopify` or `BigCommerce`
+2. **Store URL** — e.g. `myshop.myshopify.com` or `store-abc123.mybigcommerce.com`
+
+The command creates a `Site` record with a generated access token, triggering the `SiteObserver` which calls the AppsManager `/install` endpoint automatically. If a site with the same `store_hash` already exists it will be reused without re-registering.
+
+Output:
+
+```
+Emulate URL ............... https://your-app.com/shopify/emulate/1
+```
+
+### `extension:sites`
+
+Lists every registered site with its platform, status, and ready-to-open emulate URL.
+
+```bash
+php artisan extension:sites
+```
+
+Example output:
+
+```
++----+-------------+--------+------------------------------------------+-----------+--------------------------------------------+
+| ID | Platform    | Name   | URL                                      | Status    | Emulate URL                                |
++----+-------------+--------+------------------------------------------+-----------+--------------------------------------------+
+|  1 | Shopify     | Myshop | https://myshop.myshopify.com             | Installed | https://your-app.com/shopify/emulate/1     |
+|  2 | BigCommerce | Store  | https://store-abc123.mybigcommerce.com   | Installed | https://your-app.com/bigcommerce/emulate/2 |
++----+-------------+--------+------------------------------------------+-----------+--------------------------------------------+
+```
+
 ## Events
 
 The package fires the following events that your application can listen to:
