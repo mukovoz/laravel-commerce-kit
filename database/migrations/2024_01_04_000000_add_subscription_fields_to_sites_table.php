@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('sites', function (Blueprint $table) {
+        Schema::table('extension_sites', function (Blueprint $table) {
             $table->string('plan')->nullable()->after('url');
             $table->boolean('is_trial')->default(false)->after('plan');
             $table->timestamp('trial_start_at')->nullable()->after('is_trial');
@@ -22,7 +22,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('sites', function (Blueprint $table) {
+        Schema::table('extension_sites', function (Blueprint $table) {
             $table->dropColumn([
                 'plan',
                 'is_trial',

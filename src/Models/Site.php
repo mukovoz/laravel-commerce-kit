@@ -17,6 +17,8 @@ use Lantera\ExtensionFramework\Services\AppsManager\ApiClient as AppsManagerClie
  */
 class Site extends Model
 {
+    protected $table = 'extension_sites';
+
     protected $fillable = [
         'platform',
         'name',
