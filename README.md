@@ -5,7 +5,7 @@ A Laravel package that provides a multi-platform app framework for Shopify and B
 ## Requirements
 
 - PHP ^8.3
-- Laravel 13.x
+- Laravel 12.x or 13.x
 
 ## Installation
 
@@ -16,25 +16,35 @@ Since this package is hosted on a private GitHub repository, add it as a VCS sou
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:your-org/extension-framework.git"
+            "url": "git@github.com:mukovoz/laravel-commerce-kit.git",
+            "no-api": true
         }
     ]
 }
 ```
 
+The `no-api` flag tells Composer to use raw git operations instead of the GitHub REST API, so your SSH key is sufficient — no personal access token required.
+
 Then install the package:
 
 ```bash
-composer require lantera/extension-framework
+composer require lantera/extension-framework:^1.0
 ```
 
-**Authentication** — each developer needs a GitHub personal access token with `repo` scope configured in Composer:
+**SSH key** — make sure your SSH key is added to your GitHub account and that `ssh -T git@github.com` succeeds before running Composer.
 
-```bash
-composer config --global github-oauth.github.com YOUR_GITHUB_TOKEN
+**CI/CD** — on machines without an SSH agent, pass a deploy key or use HTTPS with a token:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/mukovoz/laravel-commerce-kit.git"
+        }
+    ]
+}
 ```
-
-For CI/CD pipelines, pass the token via the environment variable:
 
 ```bash
 COMPOSER_AUTH='{"github-oauth":{"github.com":"YOUR_GITHUB_TOKEN"}}'
