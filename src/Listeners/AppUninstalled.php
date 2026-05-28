@@ -8,7 +8,7 @@ abstract class AppUninstalled
     {
         $site = $event->site;
 
-        $site->appsManager->POST('/uninstall', [
+        $site->appsManager->DELETE('/uninstall', [
             'site_url' => $site->url,
         ]);
     }

@@ -82,9 +82,9 @@ readonly class ApiClient
     /**
      * @throws ConnectionException
      */
-    public function DELETE(string $endpoint): Response
+    public function DELETE(string $endpoint,array $data = []): Response
     {
-        return $this->handleResponse($this->client()->delete($endpoint));
+        return $this->handleResponse($this->client()->delete($endpoint, $data));
     }
 
     /**
