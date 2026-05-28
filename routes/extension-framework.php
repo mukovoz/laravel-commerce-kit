@@ -21,11 +21,12 @@ Route::prefix('bigcommerce')->name('bigcommerce.')->group(function () {
         ->withoutMiddleware('web');
 
     Route::get('install', BigcommerceInstallController::class)->name('install');
-    Route::get('uninstall', BigcommerceUninstallController::class)->name('uninstall');
+
     Route::get('emulate/{site}', BigcommerceEmulateController::class)->name('emulate');
 
     Route::middleware('bigcommerce')->group(function () {
         Route::get('load', BigcommerceLoadController::class)->name('load');
+        Route::get('uninstall', BigcommerceUninstallController::class)->name('uninstall');
     });
 });
 
@@ -38,10 +39,11 @@ Route::prefix('shopify')->name('shopify.')->group(function () {
 
     Route::get('install', ShopifyInstallController::class)->name('install');
     Route::get('callback', CallbackController::class)->name('callback');
-    Route::post('uninstall', ShopifyUninstallController::class)->name('uninstall');
+
     Route::get('emulate/{site}', ShopifyEmulateController::class)->name('emulate');
 
     Route::middleware('shopify')->group(function () {
         Route::get('load', ShopifyLoadController::class)->name('load');
+        Route::post('uninstall', ShopifyUninstallController::class)->name('uninstall');
     });
 });
