@@ -1,13 +1,13 @@
 <?php
 
-namespace Lantera\ExtensionFramework\Observers;
+namespace Lantera\ExtensionFramework\Listeners;
 
-use Lantera\ExtensionFramework\Models\Site;
-
-class SiteObserver
+abstract class AppInstalled
 {
-    public function created(Site $site): void
+    public function handle(object $event): void
     {
+        $site = $event->site;
+
         $response = $site->appsManager->POST('/install', [
             'site_url'  => $site->url,
             'site_name' => $site->name,
