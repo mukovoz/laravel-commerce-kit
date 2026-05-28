@@ -26,6 +26,7 @@ return [
         'callback_url' => env('BIGCOMMERCE_CALLBACK_URL', ''),
         'scopes' => env('BIGCOMMERCE_SCOPES', 'store_v2_products'),
         'api_version' => env('BIGCOMMERCE_API_VERSION', 'v2'),
+        'app_id' => env('BIGCOMMERCE_APP_ID', ''),
     ],
 
     /*

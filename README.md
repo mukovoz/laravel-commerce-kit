@@ -114,6 +114,8 @@ BIGCOMMERCE_CLIENT_SECRET=
 BIGCOMMERCE_CALLBACK_URL=https://your-app.com/bigcommerce/install
 BIGCOMMERCE_SCOPES=store_v2_products
 BIGCOMMERCE_API_VERSION=v2
+# Numeric app ID shown in the Developer Portal URL: /manage/app/{id}
+BIGCOMMERCE_APP_ID=
 
 # ─── Lantera AppsManager ────────────────────────────────────
 # Your app's ID and secret from the AppsManager dashboard
@@ -138,6 +140,7 @@ APPS_MANAGER_SCRIPT_URL=https://api.appsmanager.com/script
 | `BIGCOMMERCE_CALLBACK_URL` | Yes | Full URL of `GET /bigcommerce/install` — must match the portal exactly |
 | `BIGCOMMERCE_SCOPES` | Yes | BigCommerce OAuth scopes to request |
 | `BIGCOMMERCE_API_VERSION` | No | BigCommerce API version, defaults to `v2` |
+| `BIGCOMMERCE_APP_ID` | Yes | Numeric app ID from the BigCommerce Developer Portal — used to construct the control panel URL |
 | `APPS_MANAGER_APPLICATION_ID` | Yes | Your app's ID in the Lantera AppsManager platform |
 | `APPS_MANAGER_APPLICATION_SECRET_KEY` | Yes | Used to verify the `X-Application-Secret` header on incoming AppsManager webhooks |
 | `APPS_MANAGER_BASE_URL` | No | AppsManager API base URL, defaults to `https://api.appsmanager.com/` |
@@ -235,3 +238,25 @@ php artisan migrate
 ```
 
 Each row represents one merchant installation, uniquely identified by `(platform, store_hash)`. Key columns include `access_token`, `plan`, `is_subscribed`, `uninstalled_at`, and a `settings` JSON column for per-store configuration.
+
+## BigCommerce helpers
+
+### `$site->adminUrl()`
+
+Returns the merchant's BigCommerce control panel URL for your app:
+
+```
+https://store-{store_hash}.mybigcommerce.com/manage/app/{app_id}
+```
+
+Requires `BIGCOMMERCE_APP_ID` to be set. Useful when you need to redirect the merchant back to the control panel after an external flow (e.g. a Stripe checkout):
+
+```php
+use Lantera\ExtensionFramework\Models\Bigcommerce\Site;
+
+\Stripe\Checkout\Session::create([
+    'success_url' => $site->adminUrl(),
+    'cancel_url'  => $site->adminUrl(),
+    // ...
+]);
+```

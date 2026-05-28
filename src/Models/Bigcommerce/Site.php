@@ -20,6 +20,13 @@ class Site extends BaseSite
         'platform' => Platform::BigCommerce,
     ];
 
+    public function adminUrl(): string
+    {
+        $appId = config('platforms.bigcommerce.app_id');
+
+        return "https://store-{$this->store_hash}.mybigcommerce.com/manage/app/{$appId}";
+    }
+
     public function api(): ApiClient
     {
         return new ApiClient($this->store_hash, $this->access_token);
