@@ -77,6 +77,21 @@ class Site extends Model
         return $this->uninstalled_at === null;
     }
 
+    public function isSubscribed(): bool
+    {
+        return $this->is_subscribed && $this->unsubscribed_at === null;
+    }
+
+    public function isTrial(): bool
+    {
+        return $this->is_trial && $this->trial_end_at !== null && $this->trial_end_at->isFuture();
+    }
+
+    public function isActive(): bool
+    {
+        return $this->isInstalled() && ($this->isTrial() || $this->isSubscribed());
+    }
+
     public function scopeInstalled(Builder $query): Builder
     {
         return $query->whereNull('uninstalled_at');
